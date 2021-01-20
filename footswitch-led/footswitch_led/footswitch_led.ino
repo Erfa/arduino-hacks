@@ -1,19 +1,34 @@
 #include <Button.h>
 
-Button button(2
-);
-bool on;
+Button button1(4);
+Button button2(7);
+Button button3(8);
 
 void setup() {
-  button.begin();
-  on = false;
-  pinMode(4, OUTPUT);
+  button1.begin();
+  button2.begin();
+  button3.begin();
+  pinMode(2, OUTPUT);
 }
 
 void loop() {
-  digitalWrite(4, on ? HIGH : LOW);
+  digitalWrite(2, LOW);
+  if (button1.pressed()) {
+    blink(1);
+  }
+  if (button2.pressed()) {
+    blink(2);
+  }
+  if (button3.pressed()) {
+    blink(3);
+  }
+}
 
-  if (button.released()) {
-    on = !on;
+void blink(int n) {
+  for (int i = 0; i < n; ++i) {
+    digitalWrite(2, HIGH);
+    delay(100);
+    digitalWrite(2, LOW);
+    delay(100);
   }
 }

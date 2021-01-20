@@ -2,6 +2,7 @@
 
 const int NOTE_OFF = 0x80;
 const int NOTE_ON = 0x90;
+const int CC = 0xB0;
 
 Button button1(2);
 Button button2(4);
@@ -17,34 +18,21 @@ void setup() {
 }
 
 void loop() {
+  // CC 16-19 Are "General Purpose"
+
   if (button1.pressed()) {
-    midiCommand(NOTE_ON, 60, 127);
-  } else if (button1.released()) {
-    midiCommand(NOTE_OFF, 60, 0);
+    midiCommand(CC, 16, 127);
   }
   if (button2.pressed()) {
-    midiCommand(NOTE_ON, 62, 127);
-  } else if (button2.released()) {
-    midiCommand(NOTE_OFF, 62, 0);
+    midiCommand(CC, 17, 127);
   }
   if (button3.pressed()) {
-    midiCommand(NOTE_ON, 64, 127);
-  } else if (button3.released()) {
-    midiCommand(NOTE_OFF, 64, 0);
+    midiCommand(CC, 18, 127);
   }
 }
 
-void blink(int n) {
-  for (int i = 0; i < n; ++i) {
-    digitalWrite(13, HIGH);
-    delay(200);
-    digitalWrite(13, LOW);
-    delay(200);
-  }
-}
-
-void midiCommand(int cmd, int pitch, int velocity) {
+void midiCommand(int cmd, int param1, int param2) {
   Serial.write(cmd);
-  Serial.write(pitch);
-  Serial.write(velocity);
+  Serial.write(param1);
+  Serial.write(param2);
 }
